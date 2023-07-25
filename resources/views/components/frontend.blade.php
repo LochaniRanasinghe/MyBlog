@@ -34,19 +34,23 @@
                 <img class="w-24" src="{{asset('images/logo.png')}}" alt="" class="logo"/>
             </a>
             <ul class="flex space-x-6 mr-6 text-lg">
-                {{-- @auth --}}
+                @auth
+                {{-- //auth checks whether the user is logged in or not --}}
                 <li>
                     <span class="font-bold uppercase">
                         Welcome 
-                        {{-- {{ auth()->user()->name }} --}}
+                        {{ auth()->user()->name }}
                     </span>
                 </li>
                 <li>
-                    <a href="/listings/manage" class="hover:text-laravel"
+                    <a href="{{ route('post.manage') }}" class="hover:text-laravel"
                         ><i class="fa-solid fa-gear"></i>
                         Manage Listings</a
                     >
                 </li>
+                {{-- //logout is a post request --}}
+                {{-- "inline" class allows the form to be displayed inline with other elements, 
+                meaning it will only take up as much width as necessary to accommodate its content. --}}
                 <li>
                     <form class="inline" method="POST" action="/logout">
                     @csrf
@@ -55,9 +59,10 @@
                     </button>
                     </form>
                 </li>
-                {{-- @else --}}
+                {{-- if the user is not logged in, display the following links --}}
+                @else
                 <li>
-                    <a href="/register" class="hover:text-laravel"
+                    <a href="{{ route('register') }}" class="hover:text-laravel"
                         ><i class="fa-solid fa-user-plus"></i> Register</a
                     >
                 </li>
@@ -67,7 +72,7 @@
                         Login</a
                     >
                 </li>
-                {{-- @endauth --}}
+                @endauth
             </ul>
     </nav>
 
@@ -96,6 +101,8 @@
             <p class="ml-2">Copyright &copy; 2022, All Rights reserved</p>
 
     </footer>
+
+    <x-flash />
     
 </body>
 </html>
